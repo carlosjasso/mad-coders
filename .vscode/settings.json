@@ -1,0 +1,8 @@
+{
+    "python.terminal.activateEnvironment": true,
+    "python.terminal.activateEnvInCurrentTerminal": true,
+    "[markdown]": {
+        "editor.tabSize": 2,
+        "files.insertFinalNewline": true
+    }
+}
