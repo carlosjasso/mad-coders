@@ -1,3 +1,5 @@
+# More: https://docs.getpelican.com/en/latest/settings.html
+
 AUTHOR = 'Carlos Jasso <contact@carlosjasso.dev>'
 SITENAME = 'Mad Coders Docs | NST CoE'
 SITEURL = ''
@@ -22,10 +24,13 @@ LINKS = (('Pelican', 'https://getpelican.com/'),
          ('You can modify those links in your config file', '#'),)
 
 # Social widget
-SOCIAL = (('You can add links in your config file', '#'),
-          ('Another social link', '#'),)
+# SOCIAL = (('You can add links in your config file', '#'),
+#           ('Another social link', '#'),)
 
 DEFAULT_PAGINATION = False
 
 # Uncomment following line if you want document-relative URLs when developing
 #RELATIVE_URLS = True
+
+# Ignore example files
+IGNORE_FILES = ['*.example.*']

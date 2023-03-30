@@ -1,6 +1,9 @@
 {
     "python.terminal.activateEnvironment": true,
     "python.terminal.activateEnvInCurrentTerminal": true,
+    "markdownlint.config": {
+        "MD025": false
+    },
     "[markdown]": {
         "editor.tabSize": 2,
         "files.insertFinalNewline": true
