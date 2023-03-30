@@ -34,3 +34,6 @@ DEFAULT_PAGINATION = False
 
 # Ignore example files
 IGNORE_FILES = ['*.example.*']
+
+# Theme configuration
+THEME = './theme' 
