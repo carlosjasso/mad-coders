@@ -1,3 +1,8 @@
 {
-    "recommendations": ["ms-python.python", "DavidAnson.vscode-markdownlint", "wholroyd.jinja"]
+    "recommendations": [
+        "ms-python.python", 
+        "DavidAnson.vscode-markdownlint",
+        "wholroyd.jinja",
+        "ms-vscode.makefile-tools"
+    ]
 }
