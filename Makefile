@@ -1,31 +1,23 @@
-PY?=
-PELICAN?=pelican
-PELICANOPTS=
-
-BASEDIR=$(CURDIR)
-INPUTDIR=$(BASEDIR)/content
-OUTPUTDIR=$(BASEDIR)/output
-CONFFILE=$(BASEDIR)/pelicanconf.py
-PUBLISHCONF=$(BASEDIR)/publishconf.py
-
-GITHUB_PAGES_BRANCH=main
-
+CONTENT_DIR=$(CURDIR)/content
+OUTPUT_DIR=$(CURDIR)/output
+CONF_FILE=$(CURDIR)/pelicanconf.py
+PUBLISH_CONF=$(CURDIR)/PUBLISH_CONF.py
+PUBLISH_DIR=$(CURDIR)/site
+PELICAN_OPTS=
 
 DEBUG ?= 0
 ifeq ($(DEBUG), 1)
-	PELICANOPTS += -D
+	PELICAN_OPTS += -D
 endif
 
 RELATIVE ?= 0
 ifeq ($(RELATIVE), 1)
-	PELICANOPTS += --relative-urls
+	PELICAN_OPTS += --relative-urls
 endif
-
-SERVER ?= "0.0.0.0"
 
 PORT ?= 0
 ifneq ($(PORT), 0)
-	PELICANOPTS += -p $(PORT)
+	PELICAN_OPTS += -p $(PORT)
 endif
 
 
@@ -33,47 +25,21 @@ help:
 	@echo 'Makefile for a pelican Web site                                           '
 	@echo '                                                                          '
 	@echo 'Usage:                                                                    '
-	@echo '   make html                           (re)generate the web site          '
-	@echo '   make clean                          remove the generated files         '
-	@echo '   make regenerate                     regenerate files upon modification '
-	@echo '   make publish                        generate using production settings '
-	@echo '   make serve [PORT=8000]              serve site at http://localhost:8000'
-	@echo '   make serve-global [SERVER=0.0.0.0]  serve (as root) to $(SERVER):80    '
-	@echo '   make devserver [PORT=8000]          serve and regenerate together      '
-	@echo '   make devserver-global               regenerate and serve on 0.0.0.0    '
-	@echo '   make github                         upload the web site via gh-pages   '
+	@echo '   make clean                          remove all the generated files     '
+	@echo '   make dev [PORT=8000]                serve and regenerate together      '
+	@echo '   make publish                        regenerate site files              '
 	@echo '                                                                          '
 	@echo 'Set the DEBUG variable to 1 to enable debugging, e.g. make DEBUG=1 html   '
 	@echo 'Set the RELATIVE variable to 1 to enable relative urls                    '
 	@echo '                                                                          '
 
-html:
-	"$(PELICAN)" "$(INPUTDIR)" -o "$(OUTPUTDIR)" -s "$(CONFFILE)" $(PELICANOPTS)
-
 clean:
-	[ ! -d "$(OUTPUTDIR)" ] || rm -rf "$(OUTPUTDIR)"
+	rm -rf output && find ./site/ -type f ! -name "README.md" -delete
 
-regenerate:
-	"$(PELICAN)" -r "$(INPUTDIR)" -o "$(OUTPUTDIR)" -s "$(CONFFILE)" $(PELICANOPTS)
-
-serve:
-	"$(PELICAN)" -l "$(INPUTDIR)" -o "$(OUTPUTDIR)" -s "$(CONFFILE)" $(PELICANOPTS)
-
-serve-global:
-	"$(PELICAN)" -l "$(INPUTDIR)" -o "$(OUTPUTDIR)" -s "$(CONFFILE)" $(PELICANOPTS) -b $(SERVER)
-
-devserver:
-	"$(PELICAN)" -lr "$(INPUTDIR)" -o "$(OUTPUTDIR)" -s "$(CONFFILE)" $(PELICANOPTS)
-
-devserver-global:
-	$(PELICAN) -lr $(INPUTDIR) -o $(OUTPUTDIR) -s $(CONFFILE) $(PELICANOPTS) -b 0.0.0.0
+dev:
+	pelican -lr "$(CONTENT_DIR)" -o "$(OUTPUT_DIR)" -s "$(CONF_FILE)" $(PELICAN_OPTS)
 
 publish:
-	"$(PELICAN)" "$(INPUTDIR)" -o "$(OUTPUTDIR)" -s "$(PUBLISHCONF)" $(PELICANOPTS)
+	make clean && pelican -d "$(CONTENT_DIR)" -o "$(OUTPUT_DIR)" -s "$(CONF_FILE)" $(PELICAN_OPTS) --ignore-cache && cp output/* site/
 
-github: publish
-	ghp-import -m "Generate Pelican site" -b $(GITHUB_PAGES_BRANCH) "$(OUTPUTDIR)"
-	git push origin $(GITHUB_PAGES_BRANCH)
-
-
-.PHONY: html help clean regenerate serve serve-global devserver publish github
+.PHONY: help clean dev publish
