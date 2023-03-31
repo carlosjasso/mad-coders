@@ -22,7 +22,7 @@ endif
 
 
 help:
-	@echo 'Makefile for a pelican Web site                                           '
+	@echo 'NST Mad Coders Docs - Scripts                                             '
 	@echo '                                                                          '
 	@echo 'Usage:                                                                    '
 	@echo '   make clean                          remove all the generated files     '
@@ -30,7 +30,7 @@ help:
 	@echo '   make publish                        regenerate site files              '
 	@echo '                                                                          '
 	@echo 'Set the DEBUG variable to 1 to enable debugging, e.g. make DEBUG=1 html   '
-	@echo 'Set the RELATIVE variable to 1 to enable relative urls                    '
+#	@echo 'Set the RELATIVE variable to 1 to enable relative urls                    '
 	@echo '                                                                          '
 
 clean:
