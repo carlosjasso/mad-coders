@@ -34,12 +34,15 @@ help:
 	@echo '                                                                          '
 
 clean:
-	rm -rf output && find ./site/ -type f ! -name "README.md" -delete
+	rm -rf output \
+		&& find ./site/ -type f ! -name "README.md" -delete
 
 dev:
 	pelican -lr "$(CONTENT_DIR)" -o "$(OUTPUT_DIR)" -s "$(CONF_FILE)" $(PELICAN_OPTS)
 
 publish:
-	make clean && pelican -d "$(CONTENT_DIR)" -o "$(OUTPUT_DIR)" -s "$(CONF_FILE)" $(PELICAN_OPTS) --ignore-cache && cp output/* site/
+	make clean \
+		&& pelican -d "$(CONTENT_DIR)" -o "$(OUTPUT_DIR)" -s "$(CONF_FILE)" $(PELICAN_OPTS) --ignore-cache \
+		&& cp output/* site/
 
 .PHONY: help clean dev publish
