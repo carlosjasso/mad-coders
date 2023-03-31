@@ -19,6 +19,4 @@ This project has been built on top of python 3.11.2 on linux. To set it up:
     > Expected output: `<working-dir-path>/.venv/bin/python`
 - In VSCode, it's recommended to set the python interpreter to point to the venv via `ctrl` + `shift` + `p` > `Python: Select Interpreter`
 
-## Pelican Commands
-
-- `pelican content` - Generate site
+_**Note:**_ Check Makefile for relevant commands.
