@@ -4,6 +4,12 @@
     "markdownlint.config": {
         "MD025": false
     },
+    "[python]": {
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": true
+        }
+    },
     "[markdown]": {
         "editor.tabSize": 2,
         "files.insertFinalNewline": true
