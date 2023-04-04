@@ -1,6 +1,6 @@
-# nst-mad-coders-docs
+# Mad Coders
 
-This project holds the static site generator tool used to render the NST CoE Mad Coders documents.
+This project holds the documents and tools needed to generate the Mad Coders website.
 
 ## 🛠 Tools information
 
@@ -10,15 +10,13 @@ This project holds the static site generator tool used to render the NST CoE Mad
 
 ## ⚙ Setup
 
-This project has been built on top of python 3.11.2 on linux. To set it up:
+This project requires 3.6+. To set it up:
 
-- Run on a python [venv](https://docs.python.org/3/library/venv.html)
-  - create venv: `python3 -m venv .venv`
-  - source venv: `source .vevn/bin/activate`
-  - verify venv is active: `which python`
-    > Expected output: `<working-dir-path>/.venv/bin/python`
+- It's recommended to use a python [venv](https://docs.python.org/3/library/venv.html)
+  - set it up with the command `python3 -m venv .venv`
+  - or via the project command `python3 project.py setup --venv`
 - In VSCode, it's recommended to set the python interpreter to point to the venv via `ctrl` + `shift` + `p` > `Python: Select Interpreter`
 
-## 💻 Scripts
+## 💻 Project scripts
 
-Check _[Makefile](./Makefile)_ for relevant commands or execute `make help`.
+Execute `python3 project.py` to see available options.
