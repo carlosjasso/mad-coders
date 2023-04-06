@@ -1,4 +1,5 @@
 {
+    "custom.tasksFilePath": "${workspaceFolder}/tasks.py",
     "python.terminal.activateEnvironment": true,
     "python.terminal.activateEnvInCurrentTerminal": true,
     "markdownlint.config": {
