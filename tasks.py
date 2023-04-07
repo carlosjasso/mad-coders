@@ -1,5 +1,8 @@
 import sys
-from argparse import ArgumentParser
+import typing
+from argparse import ArgumentParser, _SubParsersAction
+
+SubparsersType = _SubParsersAction[ArgumentParser] if typing.TYPE_CHECKING else typing.Any
 
 REQUIRED_PYTHON_VERSION_MAJOR = 3
 REQUIRED_PYTHON_VERSION_MINOR = 7
@@ -27,15 +30,6 @@ def __validate_python_version() -> None:
 def __build_parser() -> ArgumentParser:
     parser = ArgumentParser(
         description="Helps with automated tasks of the project."
-    )
-
-    # options
-    parser.add_argument(
-        "--is-prod",
-        dest="IS_PROD",
-        help="Include it to specify that command must be executed for production.",
-        action="store_true",
-        default=False
     )
 
     return parser
