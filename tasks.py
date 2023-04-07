@@ -2,6 +2,8 @@ import sys
 import typing
 from argparse import ArgumentParser, _SubParsersAction
 
+import pelicanconf
+
 SubparsersType = _SubParsersAction[ArgumentParser] if typing.TYPE_CHECKING else typing.Any
 
 REQUIRED_PYTHON_VERSION_MAJOR = 3

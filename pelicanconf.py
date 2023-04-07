@@ -1,10 +1,10 @@
 # More: https://docs.getpelican.com/en/latest/settings.html
 
 AUTHOR = 'Carlos Jasso <contact@carlosjasso.dev>'
-SITENAME = 'Mad Coders Docs | NST CoE'
+SITENAME = 'Mad Coders Docs'
 SITEURL = ''
 
-PATH = 'content'
+PATH = 'articles'
 
 TIMEZONE = 'America/Mexico_City'
 
@@ -18,10 +18,10 @@ AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 
 # Blogroll
-LINKS = (('Pelican', 'https://getpelican.com/'),
-         ('Python.org', 'https://www.python.org/'),
-         ('Jinja2', 'https://palletsprojects.com/p/jinja/'),
-         ('You can modify those links in your config file', '#'),)
+# LINKS = (('Pelican', 'https://getpelican.com/'),
+#          ('Python.org', 'https://www.python.org/'),
+#          ('Jinja2', 'https://palletsprojects.com/p/jinja/'),
+#          ('You can modify those links in your config file', '#'),)
 
 # Social widget
 # SOCIAL = (('You can add links in your config file', '#'),
@@ -30,10 +30,10 @@ LINKS = (('Pelican', 'https://getpelican.com/'),
 DEFAULT_PAGINATION = False
 
 # Uncomment following line if you want document-relative URLs when developing
-#RELATIVE_URLS = True
+# RELATIVE_URLS = True
 
 # Ignore example files
 IGNORE_FILES = ['*.example.*']
 
 # Theme configuration
-THEME = './theme' 
+# THEME = './theme'
