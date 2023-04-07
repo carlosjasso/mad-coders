@@ -13,11 +13,12 @@ This project holds the documents and tools needed to generate the Mad Coders web
 This project requires 3.7+. To set it up:
 
 - It's recommended to use a python [venv](https://docs.python.org/3/library/venv.html)
-  - set it up with the command `python3 -m venv .venv`
-- In VSCode, it's recommended to set the python interpreter to point to the venv via `Command Palette` > `Python: Select Interpreter`
+  - install the module with the command `pip install virtualenv --upgrade`
+  - setup the virtual environment with the command `python3 -m venv .venv`
+- In VSCode, it's recommended to set the python interpreter to point to the virtual environment via `Command Palette` > `Python: Select Interpreter`
 
 ## 💻 Project automated tasks
 
 Execute `python3 tasks.py` to see available CLI options or checkout the [tasks.json](.vscode/tasks.json) file to see what VSCode tasks are available to be executed from the Command Palette.
 
-> Note that VSCode Tasks will use the selected python interpreter in VSCode.
+> _**Note:**_ VSCode Tasks will use the selected python interpreter.
