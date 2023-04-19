@@ -10,7 +10,7 @@ This project holds the documents and tools needed to generate the Mad Coders web
 
 ## ⚙ Setup
 
-This project requires 3.7+. To set it up:
+This project requires python 3.7+. To set it up:
 
 - It's recommended to use a python [venv](https://docs.python.org/3/library/venv.html)
   - install the module with the command `pip install virtualenv --upgrade`
