@@ -4,12 +4,12 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Scripts",
+            "label": "Pelican: Generate site",
             "type": "shell",
             "command": "${command:python.interpreterPath}",
             "args": [
                 "${config:custom.tasksFilePath}",
-                "--is-prod",
+                "-g"
             ],
             "problemMatcher": []
         }
