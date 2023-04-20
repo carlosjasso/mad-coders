@@ -1,12 +1,11 @@
+import os
+import subprocess
 import sys
 import typing
+from argparse import ArgumentParser, Namespace
 from dataclasses import dataclass
-from argparse import ArgumentParser, _SubParsersAction, Namespace
 
 import pelicanconf
-import conf
-
-SubparsersType = _SubParsersAction[ArgumentParser] if typing.TYPE_CHECKING else typing.Any
 
 REQUIRED_PYTHON_VERSION_MAJOR = 3
 REQUIRED_PYTHON_VERSION_MINOR = 7
@@ -109,7 +108,13 @@ def __build_parser() -> ArgumentParser:
 
 
 def __generate(isProd: bool):
-    print("generating...")
+    workspacePath = os.path.dirname(os.path.abspath(__file__))
+    contentPath = os.path.join(workspacePath, pelicanconf.PATH)
+    pelicanconfPath = os.path.abspath(pelicanconf.__file__)
+    outputPath = os.path.join(workspacePath, "site" if isProd else "output")
+
+    command = f"{sys.executable} -m pelican {contentPath} -o {outputPath} -d -s {pelicanconfPath}"
+    subprocess.run(command, shell=True)
 
 
 if (__name__ == "__main__"):
