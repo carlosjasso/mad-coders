@@ -4,14 +4,35 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Pelican: Generate site",
+            "label": "Project: Build (Dev)",
             "type": "shell",
             "command": "${command:python.interpreterPath}",
             "args": [
                 "${config:custom.tasksFilePath}",
-                "-g"
+                "build"
             ],
             "problemMatcher": []
-        }
+        },
+        {
+            "label": "Project: Build (Prod)",
+            "type": "shell",
+            "command": "${command:python.interpreterPath}",
+            "args": [
+                "${config:custom.tasksFilePath}",
+                "build",
+                "--is-prod"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Project: Start",
+            "type": "shell",
+            "command": "${command:python.interpreterPath}",
+            "args": [
+                "${config:custom.tasksFilePath}",
+                "serve"
+            ],
+            "problemMatcher": []
+        },
     ]
 }

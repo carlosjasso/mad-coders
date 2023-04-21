@@ -2,120 +2,153 @@ import os
 import subprocess
 import sys
 import typing
-from argparse import ArgumentParser, Namespace
-from dataclasses import dataclass
+from argparse import SUPPRESS, ArgumentParser, Namespace
+from dataclasses import dataclass, field
 
 import pelicanconf
 
+# region constants
+'''
+    python required version based on pelican requirements
+    info: https://docs.getpelican.com/en/latest/quickstart.html#installation
+'''
 REQUIRED_PYTHON_VERSION_MAJOR = 3
 REQUIRED_PYTHON_VERSION_MINOR = 7
+WORKSPACE_PATH = os.path.dirname(os.path.abspath(__file__))
+CONTENT_PATH = os.path.join(WORKSPACE_PATH, pelicanconf.PATH)
+PELICANCONF_PATH = os.path.abspath(pelicanconf.__file__)
+# endregion
+
+
+# region types
+ParserHandler = typing.Callable[[Namespace], None]
+
+
+@dataclass(init=False, frozen=True)
+class Attributes:
+    ParserHandler = "parserHandler"
+    IsProd = "isProd"
+    OutputDev = "output"
+    OutputProd = "site"
 
 
 @dataclass
-class ParserArg:
-    ARG: str
-    ALT_ARG: str
-    DEST: str
-    HELP: str
-    DEFAULT: typing.Any
+class ParserOption:
+    arg: str
+    dest: str
+    help: str
+    action: str  # info: https://docs.python.org/3/library/argparse.html#action
 
 
-@dataclass
-class Terms:
-    @dataclass
-    class MainParser:
-        @dataclass
-        class IsProd(ParserArg):
-            ARG = "--is-prod"
-            DEST = "IsProd"
-            HELP = "Include it to specify that commands must be executed for production"
-            DEFAULT = False
-
-        @dataclass
-        class Generate(ParserArg):
-            ARG = "-g"
-            ALT_ARG = "--generate"
-            DEST = "Generate"
-            HELP = "Generate the site content"
-            DEFAULT = False
-
-    @dataclass
-    class ArgparseActions:
-        STORE_TRUE = "store_true"
+@dataclass()
+class Parser:
+    name: str
+    description: str
+    handler: ParserHandler
+    options: typing.List[ParserOption] = field(default_factory=list)
+# endregion
 
 
-class TasksConfiguration:
-    def __init__(self, namespace: Namespace) -> None:
-        self.__namespace = namespace
+# region functions
+def main(args: typing.List[str]) -> None:
+    if not __isPythonVersionvalid():
+        exit(f"{os.path.basename(__file__)} requires python version {REQUIRED_PYTHON_VERSION_MAJOR}.{REQUIRED_PYTHON_VERSION_MINOR}+ ro tun.")
 
-    def __get_value(self, arg: ParserArg) -> typing.Any:
-        return getattr(self.__namespace, arg.DEST, arg.DEFAULT)
+    parser = __buildArgumentParser()
 
-    @property
-    def IsProd(self) -> bool:
-        return self.__get_value(Terms.MainParser.IsProd)
-
-    @property
-    def IsGenerate(self) -> bool:
-        return self.__get_value(Terms.MainParser.Generate)
-
-
-def main():
-    __validate_python_version()
-    parser = __build_parser()
-
-    if (len(sys.argv) == 1):
+    if not any(args):
         parser.print_help()
         exit()
 
-    tasksConf = TasksConfiguration(parser.parse_args())
+    namespace = parser.parse_args(args)
+    handler: ParserHandler = getattr(
+        namespace,
+        Attributes.ParserHandler
+    )
+    handler(namespace)
 
-    if (tasksConf.IsGenerate):
-        __generate(tasksConf.IsProd)
 
-
-def __validate_python_version() -> None:
+def __isPythonVersionvalid() -> bool:
     installed = (sys.version_info.major, sys.version_info.minor)
     required = (REQUIRED_PYTHON_VERSION_MAJOR, REQUIRED_PYTHON_VERSION_MINOR)
-    if (installed < required):
-        exit(f"{__file__} requires python version {REQUIRED_PYTHON_VERSION_MAJOR}.{REQUIRED_PYTHON_VERSION_MINOR}+ ro tun.")
+
+    return installed >= required
 
 
-def __build_parser() -> ArgumentParser:
+def __buildArgumentParser() -> ArgumentParser:
     parser = ArgumentParser(
-        description="Helps with automated tasks of the project."
+        description="Executes automated tasks of the project."
     )
 
-    group = parser.add_mutually_exclusive_group()
+    subparsers = parser.add_subparsers()
 
-    group.add_argument(
-        Terms.MainParser.Generate.ARG, Terms.MainParser.Generate.ALT_ARG,
-        dest=Terms.MainParser.Generate.DEST,
-        help=Terms.MainParser.Generate.HELP,
-        default=Terms.MainParser.Generate.DEFAULT,
-        action=Terms.ArgparseActions.STORE_TRUE
-    )
+    for item in __getSubparsers():
+        subparser = subparsers.add_parser(
+            item.name,
+            help=item.description,
+            description=item.description
+        )
 
-    parser.add_argument(
-        Terms.MainParser.IsProd.ARG,
-        dest=Terms.MainParser.IsProd.DEST,
-        help=Terms.MainParser.IsProd.HELP,
-        default=Terms.MainParser.IsProd.DEFAULT,
-        action=Terms.ArgparseActions.STORE_TRUE
-    )
+        subparser.add_argument(
+            "--parser-handler",
+            dest=Attributes.ParserHandler,
+            type=ParserHandler,
+            default=item.handler,
+            help=SUPPRESS
+        )
+
+        for option in item.options:
+            subparser.add_argument(
+                option.arg,
+                dest=option.dest,
+                help=option.help,
+                action=option.action
+            )
 
     return parser
 
 
-def __generate(isProd: bool):
-    workspacePath = os.path.dirname(os.path.abspath(__file__))
-    contentPath = os.path.join(workspacePath, pelicanconf.PATH)
-    pelicanconfPath = os.path.abspath(pelicanconf.__file__)
-    outputPath = os.path.join(workspacePath, "site" if isProd else "output")
+def __getSubparsers() -> typing.List[Parser]:
+    return [
+        Parser(
+            name="build",
+            description="Builds the project and generates the site content",
+            handler=__handleBuildParser,
+            options=[
+                ParserOption(
+                    arg="--is-prod",
+                    dest=Attributes.IsProd,
+                    help="If included, the site content will be generated in the production directory",
+                    action="store_true"
+                )
+            ]
+        ),
+        Parser(
+            name="serve",
+            description="Starts the development environment server",
+            handler=__handlerServeParser
+        )
+    ]
 
-    command = f"{sys.executable} -m pelican {contentPath} -o {outputPath} -d -s {pelicanconfPath}"
+
+def __handleBuildParser(namespance: Namespace) -> None:
+    isProd = getattr(namespance, Attributes.IsProd, False)
+    outputDirName = Attributes.OutputProd if isProd else Attributes.OutputDev
+    outputPath = os.path.join(WORKSPACE_PATH, outputDirName)
+    command = f"{sys.executable} -m pelican {CONTENT_PATH} -o {outputPath} -d -s {PELICANCONF_PATH}"
+    __runCommand(command)
+
+
+def __handlerServeParser(_: Namespace) -> None:
+    outputPath = os.path.join(WORKSPACE_PATH, Attributes.OutputDev)
+    command = f"{sys.executable} -m pelican {CONTENT_PATH} -o {outputPath} -d -r -l -s {PELICANCONF_PATH}"
+    __runCommand(command)
+
+
+def __runCommand(command: str) -> None:
     subprocess.run(command, shell=True)
+# endregion
 
 
 if (__name__ == "__main__"):
-    main()
+    main(sys.argv[1:])
