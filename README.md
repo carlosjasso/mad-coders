@@ -19,6 +19,6 @@ This project requires python 3.7+. To set it up:
 
 ## 💻 Project automated tasks
 
-Execute `python3 tasks.py` to see available CLI options or checkout the [tasks.json](.vscode/tasks.json) file to see what VSCode tasks are available to be executed from the Command Palette.
+Execute `python3 tasks.py` to see the available CLI options or checkout the [tasks.json](.vscode/tasks.json) file to see what VSCode tasks are available to be executed from the Command Palette.
 
-> _**Note:**_ VSCode Tasks will use the selected python interpreter.
+> 💡 VSCode Tasks will use the selected python interpreter.
