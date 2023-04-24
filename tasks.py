@@ -1,9 +1,9 @@
-import os
 import subprocess
 import sys
 import typing
 from argparse import SUPPRESS, ArgumentParser, Namespace
 from dataclasses import dataclass, field
+from os import path
 
 import pelicanconf
 
@@ -14,9 +14,7 @@ import pelicanconf
 '''
 REQUIRED_PYTHON_VERSION_MAJOR = 3
 REQUIRED_PYTHON_VERSION_MINOR = 7
-WORKSPACE_PATH = os.path.dirname(os.path.abspath(__file__))
-CONTENT_PATH = os.path.join(WORKSPACE_PATH, pelicanconf.PATH)
-PELICANCONF_PATH = os.path.abspath(pelicanconf.__file__)
+WORKSPACE_PATH = path.dirname(path.abspath(__file__))
 # endregion
 
 
@@ -52,7 +50,7 @@ class Parser:
 # region functions
 def main(args: typing.List[str]) -> None:
     if not __isPythonVersionvalid():
-        exit(f"{os.path.basename(__file__)} requires python version {REQUIRED_PYTHON_VERSION_MAJOR}.{REQUIRED_PYTHON_VERSION_MINOR}+ ro tun.")
+        exit(f"{path.basename(__file__)} requires python version {REQUIRED_PYTHON_VERSION_MAJOR}.{REQUIRED_PYTHON_VERSION_MINOR}+ ro tun.")
 
     parser = __buildArgumentParser()
 
@@ -126,27 +124,32 @@ def __getSubparsers() -> typing.List[Parser]:
         Parser(
             name="serve",
             description="Starts the development environment server",
-            handler=__handlerServeParser
+            handler=__handleServeParser
         )
     ]
 
 
 def __handleBuildParser(namespance: Namespace) -> None:
     isProd = getattr(namespance, Attributes.IsProd, False)
-    outputDirName = Attributes.OutputProd if isProd else Attributes.OutputDev
-    outputPath = os.path.join(WORKSPACE_PATH, outputDirName)
-    command = f"{sys.executable} -m pelican {CONTENT_PATH} -o {outputPath} -d -s {PELICANCONF_PATH}"
-    __runCommand(command)
+    outputName = Attributes.OutputProd if isProd else Attributes.OutputDev
+    outputPath = path.join(WORKSPACE_PATH, outputName)
+    __runCommand([], outputPath)
 
 
-def __handlerServeParser(_: Namespace) -> None:
-    outputPath = os.path.join(WORKSPACE_PATH, Attributes.OutputDev)
-    command = f"{sys.executable} -m pelican {CONTENT_PATH} -o {outputPath} -d -r -l -s {PELICANCONF_PATH}"
-    __runCommand(command)
+def __handleServeParser(_: Namespace) -> None:
+    __runCommand(
+        options=[
+            "--listen",
+            "--autoreload"
+        ]
+    )
 
 
-def __runCommand(command: str) -> None:
-    subprocess.run(command, shell=True)
+def __runCommand(options: typing.List[str], outputPath: str = path.join(WORKSPACE_PATH, Attributes.OutputDev)):
+    contentPath = path.join(WORKSPACE_PATH, pelicanconf.PATH)
+    settingsPath = path.abspath(pelicanconf.__file__)
+    command = f"{sys.executable} -m pelican {contentPath} --output {outputPath} --delete-output-directory --settings {settingsPath} {' '.join(options)}"
+    subprocess.run(command.strip(), shell=True)
 # endregion
 
 
