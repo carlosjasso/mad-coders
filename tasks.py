@@ -5,7 +5,7 @@ from argparse import SUPPRESS, ArgumentParser, Namespace
 from dataclasses import dataclass, field
 from os import path
 
-import pelicanconf
+import conf
 
 # region constants
 '''
@@ -146,8 +146,8 @@ def __handleServeParser(_: Namespace) -> None:
 
 
 def __runCommand(options: typing.List[str], outputPath: str = path.join(WORKSPACE_PATH, Attributes.OutputDev)):
-    contentPath = path.join(WORKSPACE_PATH, pelicanconf.PATH)
-    settingsPath = path.abspath(pelicanconf.__file__)
+    contentPath = path.join(WORKSPACE_PATH, conf.PATH)
+    settingsPath = path.abspath(conf.__file__)
     command = f"{sys.executable} -m pelican {contentPath} --output {outputPath} --delete-output-directory --settings {settingsPath} {' '.join(options)}"
     subprocess.run(command.strip(), shell=True)
 # endregion
