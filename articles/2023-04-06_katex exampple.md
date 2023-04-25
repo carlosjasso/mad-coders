@@ -26,38 +26,10 @@ $$
     \end{bmatrix}
 $$
 
-$$
-    D =
-
-    \begin{bmatrix}
-        1 & 1 \\
-        1 & -1 \\
-    \end{bmatrix}
-
-    =
-
-    (1)(-1)-(1)(1)
-
-    =
-
-    -2
-$$
+$$ D = \begin{bmatrix} 1 & 1 \\ 1 & -1 \\ \end{bmatrix} = (1)(-1)-(1)(1) = -2 $$
 
 $$
-    D_x =
-
-    \begin{bmatrix}
-        50 & 1 \\
-        10 & -1 \\
-    \end{bmatrix}
-
-    =
-
-    (50)(-1)-(1)(10)
-
-    =
-
-    -60
+    D_x = \begin{bmatrix} 50 & 1 \\ 10 & -1 \\ \end{bmatrix} = (50)(-1)-(1)(10) = -60
 $$
 
 $$
@@ -65,20 +37,7 @@ $$
 $$
 
 $$
-    D_y =
-
-    \begin{bmatrix}
-        1 & 50 \\
-        1 & 10 \\
-    \end{bmatrix}
-
-    =
-
-    (1)(10)-(50)(1)
-
-    =
-
-    -40
+    D_y = \begin{bmatrix} 1 & 50 \\ 1 & 10 \\ \end{bmatrix} = (1)(10)-(50)(1) = -40
 $$
 
 $$

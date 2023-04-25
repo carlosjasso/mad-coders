@@ -271,3 +271,22 @@ GitHub supports emoji! Check out the [Emoji Cheat Sheet](http://www.emoji-cheat-
 * http://blog.ghost.org/markdown/
 * https://guides.github.com/features/mastering-markdown/
 * [source](https://gist.githubusercontent.com/cuonggt/9b7d08a597b167299f0d/raw/c872b3fb5f851d00fba18dfbd456179319a3e9fe/markdown_guide.md)
+
+
+
+---
+
+``` python
+    @requires_authorization(roles=["ADMIN"])
+    def somefunc(param1='', param2=0):
+        r'''A docstring'''
+        if param1 > param2: # interesting
+            print 'Gre\'ater'
+        return (param2 - param1 + 1 + 0b10l) or None
+
+    class SomeClass:
+        pass
+
+    >>> message = '''interpreter
+    ... prompt'''
+```
