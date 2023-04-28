@@ -1,0 +1,11 @@
+body {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+}
+
+body main {
+    width: 80vw;
+    align-self: center;
+}
