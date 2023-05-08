@@ -11,10 +11,10 @@
         {% block page_styles %}{% endblock page_styles %}
     </head>
     <body>
-        <header id="body-header">
-            <h1>
-                <a href="/">{{ SITENAME }}</a>
-            </h1>
+        <header class="body-header">
+            <a href="/">
+                <img class="body-header__logo" alt="mad coders page logo" src="/{{THEME_STATIC_DIR}}/images/logo-black.png" />
+            </a>
         </header>
         <main class="main-content">
             {% block content %}
