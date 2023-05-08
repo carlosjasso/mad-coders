@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 {% block title %}{{ article.title }} | {{SITENAME}}{% endblock title %}
 {% block page_styles %}
+    {% assets filters="libsass", output="css/article.css", "css/article.scss" %}
+        <link rel="stylesheet" href="/{{ASSET_URL}}">
+    {% endassets %}
     <link rel="stylesheet" type="text/css" href="/theme/css/article.css">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github-dark.min.css">
 {% endblock page_styles %}

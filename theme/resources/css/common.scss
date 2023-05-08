@@ -5,7 +5,14 @@ body {
     padding: 0;
 }
 
-body main {
+.body-header {
+    &__logo {
+        width: 250px;
+        margin: 8px;
+    }
+}
+
+.main-content {
     width: 80vw;
     align-self: center;
 }

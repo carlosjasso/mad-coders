@@ -4,7 +4,10 @@
         <title>{% block title %}{{ SITENAME }}{% endblock title %}</title>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" type="text/css" href="/theme/css/common.css">
+        {% assets filters="libsass", output="css/common.css", "css/common.scss" %}
+            <link rel="stylesheet" href="/{{ASSET_URL}}">
+        {% endassets %}
+        <link rel="icon" type="mage/x-png" href="/{{THEME_STATIC_DIR}}/images/favicon.png">
         {% block page_styles %}{% endblock page_styles %}
     </head>
     <body>
@@ -13,7 +16,7 @@
                 <a href="/">{{ SITENAME }}</a>
             </h1>
         </header>
-        <main>
+        <main class="main-content">
             {% block content %}
             {% endblock content %}
         </main>
