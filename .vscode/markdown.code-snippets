@@ -1,0 +1,7 @@
+{
+    "Add page break": {
+        "prefix": "#page-break",
+        "body": "<div class=\"page-break\"></div>",
+        "description": "Adds a markdown element that gets rendered into a page break on print."
+    }
+}
