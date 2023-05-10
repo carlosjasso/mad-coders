@@ -8,7 +8,9 @@
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github-dark.min.css">
 {% endblock page_styles %}
 {% block content %}
-    {{ article.content }}
+    <article class="article-container">
+        {{ article.content }}
+    </article>
 {% endblock content %}
 {% block page_scripts %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>

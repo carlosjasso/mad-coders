@@ -1,3 +1,23 @@
 * {
     border: 1px solid purple;
 }
+
+.article-container {
+    background: pink;
+
+    img {
+        display: block;
+        margin: auto auto;
+    }
+
+    .page-break {
+        display: none;
+    }
+
+    @media print {
+        .page-break {
+            display: block;
+            page-break-after: always;
+        }
+    }
+}

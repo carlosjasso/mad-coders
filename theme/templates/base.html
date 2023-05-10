@@ -4,7 +4,7 @@
         <title>{% block title %}{{ SITENAME }}{% endblock title %}</title>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        {% assets filters="libsass", output="css/common.css", "css/common.scss" %}
+        {% assets filters="libsass", output="css/base.css", "css/base.scss" %}
             <link rel="stylesheet" href="/{{ASSET_URL}}">
         {% endassets %}
         <link rel="icon" type="mage/x-png" href="/{{THEME_STATIC_DIR}}/images/favicon.png">
