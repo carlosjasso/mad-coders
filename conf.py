@@ -29,8 +29,7 @@ AUTHOR_FEED_RSS = None
 # Ignore example files
 IGNORE_FILES = [
     "*.example.*",
-    "*.psd",
-    "*.scss"
+    "*.psd"
 ]
 
 # Theme configuration
