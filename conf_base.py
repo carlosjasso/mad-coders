@@ -1,3 +1,5 @@
+import os
+
 # More: https://docs.getpelican.com/en/latest/settings.html
 
 SITENAME = "Mad Coders"
@@ -8,6 +10,8 @@ ARTICLE_OUTPUT_PATH = PATH
 ARTICLE_SAVE_AS = f"{ARTICLE_OUTPUT_PATH}/{{slug}}.html"
 
 STATIC_PATHS = ["static"]
+
+OUTPUT = "output"
 
 # Disable not needed pages
 AUTHOR_SAVE_AS = ""
@@ -26,7 +30,7 @@ TRANSLATION_FEED_ATOM = None
 AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 
-# Ignore example files
+# Ignored files
 IGNORE_FILES = [
     "*.example.*",
     "*.psd"
