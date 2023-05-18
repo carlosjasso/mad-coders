@@ -127,3 +127,6 @@ dmypy.json
 
 # Pelican output dir
 output/
+
+# vscode launch settings
+.vscode/launch.json
