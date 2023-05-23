@@ -1,18 +1,23 @@
 {
     "custom.tasksFilePath": "${workspaceFolder}/tasks.py",
+    "files.exclude": {
+        "**/__pycache__": true,
+    },
     "python.terminal.activateEnvironment": true,
     "python.terminal.activateEnvInCurrentTerminal": true,
-    "markdownlint.config": {
-        "MD025": false
-    },
     "[python]": {
         "editor.formatOnSave": true,
         "editor.codeActionsOnSave": {
             "source.organizeImports": true
-        }
+        },
+        "editor.defaultFormatter": "ms-python.autopep8"
+    },
+    "markdownlint.config": {
+        "MD025": false
     },
     "[markdown]": {
         "editor.tabSize": 2,
         "files.insertFinalNewline": true
-    }
+    },
+    "python.formatting.provider": "none"
 }
