@@ -3,15 +3,16 @@ import sys
 import typing
 from argparse import SUPPRESS, ArgumentParser, Namespace
 from dataclasses import dataclass, field
+from datetime import datetime, timezone
 from os import path
 
-import conf
+import conf_base
+import conf_prod
 
 # region constants
-'''
-    python required version based on pelican requirements
-    info: https://docs.getpelican.com/en/latest/quickstart.html#installation
-'''
+
+# python required version based on pelican requirements
+# info: https://docs.getpelican.com/en/latest/quickstart.html#installation
 REQUIRED_PYTHON_VERSION_MAJOR = 3
 REQUIRED_PYTHON_VERSION_MINOR = 7
 WORKSPACE_PATH = path.dirname(path.abspath(__file__))
@@ -26,8 +27,9 @@ ParserHandler = typing.Callable[[Namespace], None]
 class Attributes:
     ParserHandler = "parserHandler"
     IsProd = "isProd"
-    OutputDev = "output"
-    OutputProd = "site"
+    Title = "title"
+    Status = "status"
+    Statuses = ["draft", "published", "hidden"]
 
 
 @dataclass
@@ -36,6 +38,8 @@ class ParserOption:
     dest: str
     help: str
     action: str  # info: https://docs.python.org/3/library/argparse.html#action
+    required: bool = False
+    choices: typing.List[typing.Any] = None
 
 
 @dataclass()
@@ -47,7 +51,6 @@ class Parser:
 # endregion
 
 
-# region functions
 def main(args: typing.List[str]) -> None:
     if not __isPythonVersionvalid():
         exit(f"{path.basename(__file__)} requires python version {REQUIRED_PYTHON_VERSION_MAJOR}.{REQUIRED_PYTHON_VERSION_MINOR}+ ro tun.")
@@ -59,10 +62,7 @@ def main(args: typing.List[str]) -> None:
         exit()
 
     namespace = parser.parse_args(args)
-    handler: ParserHandler = getattr(
-        namespace,
-        Attributes.ParserHandler
-    )
+    handler: ParserHandler = getattr(namespace, Attributes.ParserHandler)
     handler(namespace)
 
 
@@ -75,8 +75,7 @@ def __isPythonVersionvalid() -> bool:
 
 def __buildArgumentParser() -> ArgumentParser:
     parser = ArgumentParser(
-        description="Executes automated tasks of the project."
-    )
+        description="Executes automated tasks of the project.")
 
     subparsers = parser.add_subparsers()
 
@@ -92,15 +91,22 @@ def __buildArgumentParser() -> ArgumentParser:
             dest=Attributes.ParserHandler,
             type=ParserHandler,
             default=item.handler,
-            help=SUPPRESS
+            help=SUPPRESS,
         )
 
         for option in item.options:
+            kargs = {
+                "dest": option.dest,
+                "help": option.help,
+                "action": option.action
+            }
+
+            if (option.choices is not None and any(option.choices)):
+                kargs["choices"] = option.choices
+
             subparser.add_argument(
                 option.arg,
-                dest=option.dest,
-                help=option.help,
-                action=option.action
+                **kargs
             )
 
     return parser
@@ -125,33 +131,89 @@ def __getSubparsers() -> typing.List[Parser]:
             name="serve",
             description="Starts the development environment server",
             handler=__handleServeParser
+        ),
+        Parser(
+            name="generate",
+            description="Generates a new time-stampped article file.",
+            handler=__handleGenerateParser,
+            options=[
+                ParserOption(
+                    arg="--title",
+                    dest=Attributes.Title,
+                    help="The new article title. It will also be used as fileaname (Spaces will be replaced with hyphens).",
+                    action="store",
+                    required=True
+                ),
+                ParserOption(
+                    arg="--status",
+                    dest=Attributes.Status,
+                    help="The published status for the new article (defaults to \"draft\").",
+                    action="store",
+                    required=False,
+                    choices=Attributes.Statuses
+                )
+            ]
         )
     ]
 
 
 def __handleBuildParser(namespance: Namespace) -> None:
     isProd = getattr(namespance, Attributes.IsProd, False)
-    outputName = Attributes.OutputProd if isProd else Attributes.OutputDev
-    outputPath = path.join(WORKSPACE_PATH, outputName)
-    __runCommand([], outputPath)
+    options = ["--ignore-cache"] if isProd else []
+    conf = conf_prod if isProd else conf_base
+    __runPelicanCommand(options, conf)
 
 
 def __handleServeParser(_: Namespace) -> None:
+    __runPelicanCommand(options=["--listen", "--autoreload"])
+
+
+def __handleGenerateParser(namespance: Namespace) -> None:
+    title = str(
+        getattr(namespance, Attributes.Title, "")
+    ).strip()
+    status = str(
+        getattr(namespance, Attributes.Status, "draft")
+    )
+
+    utcTime = datetime.now(timezone.utc)
+    date = utcTime.strftime('%Y-%m-%d')
+    slug = title.replace(' ', '-')
+    fileName = f"{date}_{slug}.md"
+    filePath = path.join(WORKSPACE_PATH, conf_base.PATH, fileName)
+
+    timeStamp = utcTime.strftime('%Y-%m-%d %H:%M')
+    with open(filePath, mode="x") as file:
+        lines = "\n".join([
+            "---",
+            f"title: {title}",
+            f"date: {timeStamp}",
+            f"modified: {timeStamp}",
+            f"tags: none",
+            f"slug: {slug}",
+            f"author: {conf_base.SITENAME}",
+            f"summary: {title}",
+            f"status: {status}",
+            "---"
+        ]) + ("\n" * 2)
+        file.write(lines)
+
+    __runCommand(f"code {filePath} --reuse-window")
+
+
+def __runPelicanCommand(options: typing.List[str], conf=conf_base):
+    contentPath = path.join(WORKSPACE_PATH, conf.PATH)
+    outputPath = path.join(WORKSPACE_PATH, conf.OUTPUT)
+    settingsPath = path.abspath(conf.__file__)
+
     __runCommand(
-        options=[
-            "--listen",
-            "--autoreload"
-        ]
+        f"{sys.executable} -m pelican {contentPath} --output {outputPath} --delete-output-directory --settings {settingsPath} {' '.join(options)}"
     )
 
 
-def __runCommand(options: typing.List[str], outputPath: str = path.join(WORKSPACE_PATH, Attributes.OutputDev)):
-    contentPath = path.join(WORKSPACE_PATH, conf.PATH)
-    settingsPath = path.abspath(conf.__file__)
-    command = f"{sys.executable} -m pelican {contentPath} --output {outputPath} --delete-output-directory --settings {settingsPath} {' '.join(options)}"
+def __runCommand(command: str):
     subprocess.run(command.strip(), shell=True)
-# endregion
 
 
-if (__name__ == "__main__"):
+if __name__ == "__main__":
     main(sys.argv[1:])

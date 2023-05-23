@@ -9,7 +9,7 @@ DEFAULT_LANG = "en"
 ARTICLE_OUTPUT_PATH = PATH
 ARTICLE_SAVE_AS = f"{ARTICLE_OUTPUT_PATH}/{{slug}}.html"
 
-STATIC_PATHS = ["static"]
+# STATIC_PATHS = ["static"]
 
 OUTPUT = "output"
 
@@ -32,7 +32,6 @@ AUTHOR_FEED_RSS = None
 
 # Ignored files
 IGNORE_FILES = [
-    "*.example.*",
     "*.psd"
 ]
 

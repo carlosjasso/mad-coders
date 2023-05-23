@@ -4,7 +4,7 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Project: Build (Dev)",
+            "label": "Site: Build (Dev)",
             "type": "shell",
             "command": "${command:python.interpreterPath}",
             "args": [
@@ -14,7 +14,7 @@
             "problemMatcher": []
         },
         {
-            "label": "Project: Build (Prod)",
+            "label": "Site: Build (Prod)",
             "type": "shell",
             "command": "${command:python.interpreterPath}",
             "args": [
@@ -25,7 +25,7 @@
             "problemMatcher": []
         },
         {
-            "label": "Project: Start development server",
+            "label": "Site: Start development server",
             "type": "shell",
             "command": "${command:python.interpreterPath}",
             "args": [
@@ -34,5 +34,38 @@
             ],
             "problemMatcher": []
         },
+        {
+            "label": "Utils: Generate new article file",
+            "type": "shell",
+            "command": "${command:python.interpreterPath}",
+            "args": [
+                "${config:custom.tasksFilePath}",
+                "generate",
+                "--title",
+                "${input:article-title}",
+                "--status",
+                "${input:article-status}",
+            ],
+            "problemMatcher": []
+        },
+    ],
+    "inputs": [
+        {
+            "type": "promptString",
+            "id": "article-title",
+            "description": "New article title",
+            "default": ""
+        },
+        {
+            "type": "pickString",
+            "id": "article-status",
+            "description": "Choose an initian status for the new article",
+            "options": [
+                { "label": "Process under the /drafts path", "value": "draft" },
+                { "label": "Process as a published article", "value": "published" },
+                { "label": "Ignore article", "value": "hidden" },
+            ],
+            "default": "draft"
+        }
     ]
 }
