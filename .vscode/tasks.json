@@ -40,7 +40,8 @@
             "command": "${command:python.interpreterPath}",
             "args": [
                 "${config:custom.tasksFilePath}",
-                "generate",
+                "article",
+                "new",
                 "--title",
                 "${input:article-title}",
                 "--status",
