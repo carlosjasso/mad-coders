@@ -36,8 +36,8 @@ There are several properties that can be set on an article's frontmatter to prov
 ```yaml
 ---
 title: Example # Title of the article or page
-date: 2023-03-29 17:57 # Creation date (e.g., YYYY-MM-DD HH:SS)
-modified: 2023-03-29 17:57 # Modification date (e.g., YYYY-MM-DD HH:SS)
+date: 2023-05-25T23:50:39+00:00 # Creation date in UTC timezone and ISO-8601 format
+modified: 2023-05-25T23:50:39+00:00 # Modification date in UTC timezone and ISO-8601 format
 tags: example, article, placeholder # Content tags, separated by commas
 keywords: HTML, CSS, JavaScript # Content keywords, separated by commas (HTML content only)
 category: example # Content category (one only — not multiple)

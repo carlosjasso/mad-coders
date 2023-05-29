@@ -1,7 +1,7 @@
 ---
 title: Markdown basics
-date: 2023-04-06 21:26
-modified: 2023-04-06 21:26
+date: 2023-04-06T21:26:00+00:00
+modified: 2023-04-06T21:26:00+00:00
 tags: markdown
 slug: markdown-basics
 author: CarlosJasso

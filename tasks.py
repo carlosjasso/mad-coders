@@ -278,7 +278,7 @@ def __handlerParser(parser: ArgumentParser, args: typing.List[str]) -> None:
 
 def __initArticle(title: str, status: str) -> Article:
     utcTime = datetime.now(timezone.utc)
-    timestamp = utcTime.strftime('%Y-%m-%d %H:%M')
+    timestamp = utcTime.isoformat(timespec="seconds")
     slug = title.replace(' ', '-')
     basename = f"{utcTime.strftime('%Y-%m-%d')}_{slug}.md"
 

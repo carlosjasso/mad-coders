@@ -1,7 +1,7 @@
 ---
 title: Katex example
-date: 2023-04-06 21:33
-modified: 2023-04-06 21:33
+date: 2023-04-06T21:33:00+00:00
+modified: 2023-05-26T16:00:00+00:00
 tags: markdown, katex
 slug: katex-example
 author: CarlosJasso
