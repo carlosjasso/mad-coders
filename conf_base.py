@@ -1,15 +1,11 @@
-import os
-
 # More: https://docs.getpelican.com/en/latest/settings.html
-
 SITENAME = "Mad Coders"
 PATH = "articles"
 DEFAULT_LANG = "en"
 
 ARTICLE_OUTPUT_PATH = PATH
 ARTICLE_SAVE_AS = f"{ARTICLE_OUTPUT_PATH}/{{slug}}.html"
-
-# STATIC_PATHS = ["static"]
+ARTICLE_ORDER_BY = "reversed-modified"
 
 OUTPUT = "output"
 
@@ -23,7 +19,7 @@ TAGS_SAVE_AS = ""
 ARCHIVES_SAVE_AS = ""
 
 # Disable feed generation
-TIMEZONE = "America/Mexico_City"
+TIMEZONE = "UTC"
 FEED_ALL_ATOM = None
 CATEGORY_FEED_ATOM = None
 TRANSLATION_FEED_ATOM = None
@@ -39,3 +35,4 @@ IGNORE_FILES = [
 THEME = "./theme"
 THEME_STATIC_DIR = "resources"
 THEME_STATIC_PATHS = [THEME_STATIC_DIR]
+JS_FILTER = None
