@@ -1,0 +1,13 @@
+{% macro localizeTimestamp(article) %}
+    <time class="article__timestamp hidden">
+        {% if article.modified > article.date %}
+            <span>Updated:</span>
+            <span class="article__timestamp__value">{{ article.modified }}</span>
+            <span>| Published:</span>
+            <span class="article__timestamp__value">{{ article.date }}</span>
+        {% else %}
+        <span>Published:</span>
+        <span class="article__timestamp__value">{{ article.date }}</span>
+        {% endif %}
+    </time>
+{% endmacro %}

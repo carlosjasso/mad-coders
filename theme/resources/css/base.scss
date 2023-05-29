@@ -1,25 +1,4 @@
-@font-face {
-    font-family: avenir;
-    src: url(/resources/Avenir.ttc);
-}
-
-@font-face {
-    font-family: CascadiaMono;
-    src: url(/resources/CascadiaMono.ttf);
-}
-
-*:not(code) {
-    font-family: avenir, Arial, Helvetica, sans-serif;
-}
-
-body {
-    display: flex;
-    flex-direction: column;
-    margin: 0;
-    padding: 0;
-}
-
-.body-header {
+.main-header {
     &__logo {
         width: 250px;
         margin: 8px;
@@ -29,16 +8,6 @@ body {
 .main-content {
     width: 80vw;
     align-self: center;
-
-    code {
-        font-family: CascadiaMono, monospace !important;
-        font-size: 0.9em;
-    }
-}
-
-@page {
-    size: letter;
-    margin: 12mm;
 }
 
 @media print {

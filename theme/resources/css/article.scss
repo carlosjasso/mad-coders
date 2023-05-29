@@ -1,23 +1,25 @@
-* {
-    border: 1px solid purple;
-}
+.article {
+    &__container {
+        background: pink;
 
-.article-container {
-    background: pink;
-
-    img {
-        display: block;
-        margin: auto auto;
-    }
-
-    .page-break {
-        display: none;
-    }
-
-    @media print {
-        .page-break {
+        img {
             display: block;
-            page-break-after: always;
+            margin: auto auto;
         }
+
+        .page-break {
+            display: none;
+        }
+
+        @media print {
+            .page-break {
+                display: block;
+                page-break-after: always;
+            }
+        }
+    }
+
+    &__timestamp {
+        font-size: 0.8em;
     }
 }

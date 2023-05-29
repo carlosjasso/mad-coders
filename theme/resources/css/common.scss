@@ -1,0 +1,38 @@
+@font-face {
+    font-family: avenir;
+    src: url(/resources/fonts/Avenir.ttc);
+}
+
+@font-face {
+    font-family: CascadiaMono;
+    src: url(/resources/fonts/CascadiaMono.ttf);
+}
+
+// * {
+//     border: 1px solid purple;
+// }
+
+body {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+}
+
+*:not(code) {
+    font-family: avenir, Arial, Helvetica, sans-serif;
+}
+
+code {
+    font-family: CascadiaMono, monospace !important;
+    font-size: 0.9em;
+}
+
+.hidden {
+    display: none;
+}
+
+@page {
+    size: letter;
+    margin: 12mm;
+}
