@@ -1,5 +1,4 @@
 {
-    "custom.tasksFilePath": "${workspaceFolder}/tasks.py",
     "files.exclude": {
         "**/__pycache__": true,
     },

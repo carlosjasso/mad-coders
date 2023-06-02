@@ -8,7 +8,8 @@
             "type": "shell",
             "command": "${command:python.interpreterPath}",
             "args": [
-                "${config:custom.tasksFilePath}",
+                "-m",
+                "tasks",
                 "build"
             ],
             "problemMatcher": []
@@ -18,7 +19,8 @@
             "type": "shell",
             "command": "${command:python.interpreterPath}",
             "args": [
-                "${config:custom.tasksFilePath}",
+                "-m",
+                "tasks",
                 "build",
                 "--is-prod"
             ],
@@ -29,7 +31,8 @@
             "type": "shell",
             "command": "${command:python.interpreterPath}",
             "args": [
-                "${config:custom.tasksFilePath}",
+                "-m",
+                "tasks",
                 "serve"
             ],
             "problemMatcher": []
@@ -39,7 +42,8 @@
             "type": "shell",
             "command": "${command:python.interpreterPath}",
             "args": [
-                "${config:custom.tasksFilePath}",
+                "-m",
+                "tasks",
                 "article",
                 "new",
                 "--title",
