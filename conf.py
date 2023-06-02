@@ -1,13 +1,32 @@
+from os import path
+
+# Project configuration
+WORKSPACE_PATH = path.dirname(path.abspath(__name__))
+###
+# python required version based on pelican requirements
+# info: https://docs.getpelican.com/en/latest/quickstart.html#installation
+REQUIRED_PYTHON_VERSION_MAJOR = 3
+REQUIRED_PYTHON_VERSION_MINOR = 7
+###
+
 # More: https://docs.getpelican.com/en/latest/settings.html
 SITENAME = "Mad Coders"
-PATH = "articles"
 DEFAULT_LANG = "en"
+TIMEZONE = "UTC"
+
+PATH = "articles"
 
 ARTICLE_OUTPUT_PATH = PATH
 ARTICLE_SAVE_AS = f"{ARTICLE_OUTPUT_PATH}/{{slug}}.html"
 ARTICLE_ORDER_BY = "reversed-modified"
 
-OUTPUT = "output"
+OUTPUT_DEV = "output"
+OUTPUT_PROD = "site"
+DELETE_OUTPUT_DIRECTORY = True
+
+CACHE_PATH = ".cache"
+# CACHE_CONTENT = True
+# LOAD_CONTENT_CACHE = True
 
 # Disable not needed pages
 AUTHOR_SAVE_AS = ""
@@ -19,7 +38,6 @@ TAGS_SAVE_AS = ""
 ARCHIVES_SAVE_AS = ""
 
 # Disable feed generation
-TIMEZONE = "UTC"
 FEED_ALL_ATOM = None
 CATEGORY_FEED_ATOM = None
 TRANSLATION_FEED_ATOM = None
@@ -28,11 +46,12 @@ AUTHOR_FEED_RSS = None
 
 # Ignored files
 IGNORE_FILES = [
-    "*.psd"
+    "*.psd",
+    "*.scss",
+    "*.js"
 ]
 
 # Theme configuration
-THEME = "./theme"
+THEME = "theme"
 THEME_STATIC_DIR = "resources"
 THEME_STATIC_PATHS = [THEME_STATIC_DIR]
-JS_FILTER = None
