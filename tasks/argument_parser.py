@@ -1,9 +1,9 @@
 import typing
-from argparse import SUPPRESS, ArgumentParser, Namespace, _SubParsersAction
+from argparse import SUPPRESS, ArgumentParser, _SubParsersAction
 
 from tasks import article_handler, build_handler, serve_handler
 from tasks.types import (Parser, ParserArgument, ParserBase, ParserHandler,
-                         SubParser, Terms)
+                         PassiveParser, Terms)
 
 
 def parseArgs(args: typing.List[str]) -> None:
@@ -26,7 +26,7 @@ def __initArgumentParser() -> ArgumentParser:
     return parser
 
 
-def __getParsers() -> typing.List[Parser]:
+def __getParsers() -> typing.List[ParserBase]:
     return [
         __initBuildParser(),
         __initServeParser(),
@@ -58,59 +58,93 @@ def __initServeParser() -> Parser:
     )
 
 
-def __initArticleParser() -> Parser:
-    return Parser(
+def __initArticleParser() -> PassiveParser:
+    return PassiveParser(
         name="article",
         description="Utility tasks for article creation and manipulation.",
         subparsers=[
-            SubParser(
-                name="new",
-                description="Create a new scaffolded article file.",
-                handler=article_handler.createArticle,
-                arguments=[
-                    ParserArgument(
-                        flag="--title",
-                        name=Terms.Title,
-                        help="The new article title. It will also be used as fileaname (Spaces will be replaced with hyphens).",
-                        action="store",
-                        required=True
-                    ),
-                    ParserArgument(
-                        flag="--status",
-                        name=Terms.Status,
-                        help="The published status for the new article (defaults to \"draft\").",
-                        action="store",
-                        choices=["draft", "published", "hidden"]
-                    )
-                ]
+            __initNewArticleParser(),
+            __initArticleUtilsParser()
+        ]
+    )
+
+
+def __initNewArticleParser() -> Parser:
+    return Parser(
+        name="new",
+        description="Create a new scaffolded article file.",
+        handler=article_handler.createArticle,
+        arguments=[
+            ParserArgument(
+                flag="--title",
+                name=Terms.Title,
+                help="The new article title. It will also be used as fileaname (Spaces will be replaced with hyphens).",
+                action="store",
+                required=True
+            ),
+            ParserArgument(
+                flag="--status",
+                name=Terms.Status,
+                help="The published status for the new article (defaults to \"draft\").",
+                action="store",
+                choices=["draft", "published", "hidden"]
             )
         ]
     )
 
 
-def __attachSubParsers(root: ArgumentParser, parsers: typing.List[Parser]) -> None:
+def __initArticleUtilsParser() -> Parser:
+    return Parser(
+        name="utils",
+        description="Utilities for the article files.",
+        handler=article_handler.processUtils,
+        arguments=[
+            ParserArgument(
+                flag="--timestamp",
+                name=Terms.Timestamp,
+                help="Prints an ISO-8601 formatted timestamp with the current time in UTC.",
+                action="store_true"
+            )
+        ]
+    )
+
+
+def __attachSubParsers(root: ArgumentParser, parsers: typing.List[ParserBase]) -> None:
     subparsers = root.add_subparsers()
 
     for parser in parsers:
         subparser = __attachSubParser(subparsers, parser)
 
-        if isinstance(parser, Parser) and any(parser.subparsers):
+        if isinstance(parser, PassiveParser):
             __attachSubParsers(subparser, parser.subparsers)
 
 
-def __attachSubParser(subparser: _SubParsersAction, parserObject: Parser) -> ArgumentParser:
+def __attachSubParser(subparser: _SubParsersAction, parserObject: ParserBase) -> ArgumentParser:
     parser: ArgumentParser = subparser.add_parser(
         parserObject.name,
         **__getParserArgsDict(parserObject)
     )
 
+    handler = parserObject.handler \
+        if isinstance(parserObject, Parser) \
+        else __getPrintHelpHandler(parser)
+
+    arguments = parserObject.arguments \
+        if isinstance(parserObject, Parser) \
+        else []
+
     __attachParcerArguments(
         parser,
-        parserObject.handler,
-        parserObject.arguments
+        handler,
+        arguments
     )
 
     return parser
+
+
+def __getPrintHelpHandler(parser: ArgumentParser) -> ParserHandler:
+    printHelp: ParserHandler = lambda _: parser.print_help()
+    return printHelp
 
 
 def __getParserArgsDict(parser: ParserBase) -> typing.Dict[str, str]:
@@ -123,7 +157,7 @@ def __getParserArgsDict(parser: ParserBase) -> typing.Dict[str, str]:
 def __attachParcerArguments(parser: ArgumentParser, handler: ParserHandler, arguments: typing.List[ParserArgument]) -> None:
     parser.add_argument(
         "--parser-handler",
-        **__getParserHandlerArgsDict(handler or __getPrintHelpHandler(parser))
+        **__getParserHandlerArgsDict(handler)
     )
 
     for argument in arguments:
@@ -154,11 +188,6 @@ def __getParserArgumentArgsDict(argument: ParserArgument) -> typing.Dict[str, ty
         value["choices"] = argument.choices
 
     return value
-
-
-def __getPrintHelpHandler(parser: ArgumentParser) -> ParserHandler:
-    printHelp: ParserHandler = lambda _: parser.print_help()
-    return printHelp
 
 
 def __handleParser(parser: ArgumentParser, args: typing.List[str]) -> None:
