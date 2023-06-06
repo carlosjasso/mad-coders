@@ -1,11 +1,11 @@
 import subprocess
 from argparse import Namespace
-from datetime import datetime
+from datetime import datetime, timezone
 from os import path
 
 import conf
 from tasks import helpers
-from tasks.types import Article, CreateArticleProps
+from tasks.types import Article, ArticleUtilsProps, CreateArticleProps
 
 
 def createArticle(namespace: Namespace) -> None:
@@ -15,9 +15,16 @@ def createArticle(namespace: Namespace) -> None:
     subprocess.run(f"code {article.path} --reuse-window", shell=True)
 
 
+def processUtils(namespace: Namespace) -> None:
+    props = helpers.getProps(namespace, ArticleUtilsProps)
+
+    if props.isTimestamp:
+        __printTimestamp()
+
+
 def __initArticle(title: str, status: str) -> Article:
-    utcTime = datetime.utcnow()
-    timestamp = utcTime.isoformat(timespec="seconds")
+    utcTime = __getUtcTime()
+    timestamp = __getIsoTimestamp(utcTime)
     slug = title.replace(' ', '-')
     basename = f"{utcTime.strftime('%Y-%m-%d')}_{slug}.md"
 
@@ -33,6 +40,20 @@ def __initArticle(title: str, status: str) -> Article:
         basename=basename,
         path=path.join(conf.WORKSPACE_PATH, conf.PATH, basename)
     )
+
+
+def __printTimestamp() -> None:
+    utcTime = __getUtcTime()
+    timestamp = __getIsoTimestamp(utcTime)
+    print(f"\t{timestamp}\n")
+
+
+def __getUtcTime() -> datetime:
+    return datetime.now(tz=timezone.utc)
+
+
+def __getIsoTimestamp(time: datetime) -> str:
+    return time.isoformat(timespec="seconds")
 
 
 def __getFrontMatter(article: Article) -> str:

@@ -1,5 +1,5 @@
 import typing
-from abc import ABC
+from abc import ABC as Abstract
 from argparse import Namespace
 from dataclasses import dataclass, field
 
@@ -10,6 +10,7 @@ ParserHandler = typing.Callable[[Namespace], None]
 class Terms:
     ParserHandler = "parserHandler"
     IsProd = "isProd"
+    Timestamp = "isTimestamp"
     Title = "title"
     Status = "status"
 
@@ -25,23 +26,23 @@ class ParserArgument:
 
 
 @dataclass
-class ParserBase(ABC):
+class ParserBase(Abstract):
     name: str
     description: str
+
+
+@dataclass
+class Parser(ParserBase):
     handler: ParserHandler = None
     arguments: typing.List[ParserArgument] = field(default_factory=list)
 
 
 @dataclass
-class SubParser(ParserBase):
-    pass
+class PassiveParser(ParserBase):
+    subparsers: typing.List[Parser] = field(default_factory=list)
 
 
 @dataclass
-class Parser(ParserBase):
-    subparsers: typing.List[SubParser] = field(default_factory=list)
-
-
 @dataclass
 class Article():
     title: str
@@ -59,6 +60,11 @@ class Article():
 @dataclass
 class BuildHandlerProps():
     isProd: bool = False
+
+
+@dataclass
+class ArticleUtilsProps():
+    isTimestamp: bool = False
 
 
 @dataclass
