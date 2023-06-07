@@ -18,6 +18,7 @@ This project requires python 3.7+. To set it up:
   - install the module with the command `pip install virtualenv --upgrade`
   - setup the virtual environment with the command `python3 -m venv .venv`
 - In VSCode, it's recommended to set the python interpreter to point to the virtual environment via `Command Palette` > `Python: Select Interpreter`
+- Install python required packages with the command `pip install -r requirements.txt`
 
 ### 💻 Project automated tasks
 
