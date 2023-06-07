@@ -12,9 +12,6 @@
         },
         "editor.defaultFormatter": "ms-python.autopep8"
     },
-    "markdownlint.config": {
-        "MD025": false
-    },
     "[markdown]": {
         "editor.tabSize": 2,
         "files.insertFinalNewline": true
