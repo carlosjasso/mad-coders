@@ -20,9 +20,9 @@
             {% block content %}
             {% endblock content %}
         </main>
-        {% block page_scripts %}{% endblock page_scripts %}
         {% assets filters=JS_FILTER, output="scripts/bundle.min.js", "scripts/common.js" %}
             <script src="/{{ASSET_URL}}" defer></script>
         {% endassets %}
+        {% block page_scripts %}{% endblock page_scripts %}
     </body>
 </html>

@@ -1,0 +1,17 @@
+{% import "_icons.html" as icons %}
+{% macro localizeTimestamp(article) %}
+    <p class="article__timestamp hidden">
+        <span>
+            {{ icons.clock() }}
+        </span>
+        {% if article.modified > article.date %}
+            <span>Updated:</span>
+            <time class="article__timestamp__value">{{ article.modified }}</time>
+            <span>| Published:</span>
+            <time class="article__timestamp__value">{{ article.date }}</time>
+        {% else %}
+            <span>Published:</span>
+            <time class="article__timestamp__value">{{ article.date }}</time>
+        {% endif %}
+    </p>
+{% endmacro %}

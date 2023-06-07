@@ -1,15 +1,15 @@
 {% extends "base.html" %}
-{% import "_macros.html" as components %}
+{% import "_components.html" as components %}
 {% block content %}
     <section>
-        <h2>All articles</h2>
-        <ul>
+        <h1>All articles</h1>
+        <ul class="article__list">
             {% for article in articles_page.object_list %}
                 <li>
                     <article>
-                        <header>
+                        <header class="article__header">
                             <h3>
-                                <a href="{{ ARTICLE_OUTPUT_PATH }}/{{ article.url }}" rel="bookmark" title="Permalink to {{ article.title|striptags }}">{{ article.title }}</a>
+                                <a href="{{ ARTICLE_OUTPUT_PATH }}/{{ article.url }}" rel="bookmark" title="Permalink to {{ article.title }}">{{ article.title }}</a>
                             </h3> 
                             {{ components.localizeTimestamp(article) }}
                         </header>

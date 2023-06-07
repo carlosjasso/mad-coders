@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% import "_macros.html" as components %}
+{% import "_components.html" as components %}
 {% block title %}{{ article.title }} | {{SITENAME}}{% endblock title %}
 {% block page_styles %}
     {# code highlighting theme. More: https://cdnjs.com/libraries/highlight.js #}
@@ -7,7 +7,7 @@
 {% endblock page_styles %}
 {% block content %}
     <article>
-        <header>
+        <header class="article__header">
             <h1>{{ article.title }}</h1>
             {{ components.localizeTimestamp(article) }}
         </header>

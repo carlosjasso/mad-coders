@@ -1,12 +1,5 @@
-@font-face {
-    font-family: avenir;
-    src: url(/resources/fonts/Avenir.ttc);
-}
-
-@font-face {
-    font-family: CascadiaMono;
-    src: url(/resources/fonts/CascadiaMono.ttf);
-}
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
+@import url("https://cdnjs.cloudflare.com/ajax/libs/firacode/6.2.0/fira_code.min.css");
 
 // * {
 //     border: 1px solid purple;
@@ -20,16 +13,22 @@ body {
 }
 
 *:not(code) {
-    font-family: avenir, Arial, Helvetica, sans-serif;
+    font-family: Montserrat, Arial, Helvetica, sans-serif;
 }
 
 code {
-    font-family: CascadiaMono, monospace !important;
-    font-size: 0.9em;
+    font-family: "Fira Code", monospace !important;
+    font-size: 0.8em;
 }
 
 .hidden {
     display: none;
+}
+
+.icon-default{
+    svg{
+        stroke: black;
+    }
 }
 
 @page {
