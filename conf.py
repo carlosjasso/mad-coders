@@ -2,13 +2,12 @@ from os import path
 
 # Project configuration
 WORKSPACE_PATH = path.dirname(path.abspath(__name__))
-###
 # python required version based on pelican requirements
 # info: https://docs.getpelican.com/en/latest/quickstart.html#installation
 REQUIRED_PYTHON_VERSION_MAJOR = 3
 REQUIRED_PYTHON_VERSION_MINOR = 7
-###
 
+# Pelican configuration
 # More: https://docs.getpelican.com/en/latest/settings.html
 SITENAME = "Mad Coders"
 DEFAULT_LANG = "en"
@@ -25,8 +24,6 @@ OUTPUT_PROD = "site"
 DELETE_OUTPUT_DIRECTORY = True
 
 CACHE_PATH = ".cache"
-# CACHE_CONTENT = True
-# LOAD_CONTENT_CACHE = True
 
 # Disable not needed pages
 AUTHOR_SAVE_AS = ""
