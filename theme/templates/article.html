@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% import "_components.html" as components %}
+{% block title %}{{ article.title }} | {{SITENAME}}{% endblock title %}
+{% block page_styles %}
+    {# code highlighting theme. More: https://cdnjs.com/libraries/highlight.js #}
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css">
+{% endblock page_styles %}
+{% block content %}
+    <article>
+        <header class="article__header">
+            <h1>{{ article.title }}</h1>
+            {{ components.localizeTimestamp(article) }}
+        </header>
+        <section class="article__container">
+            {{ article.content }}
+        </section>
+    </article>
+{% endblock content %}
+{% block page_scripts %}
+    {# code highlighting. More: https://highlightjs.org/usage/ #}
+    <script id="code-highlighter" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js" onload="hljs.highlightAll();" defer></script>
+{% endblock page_scripts %}

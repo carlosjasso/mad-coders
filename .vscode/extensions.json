@@ -1,0 +1,9 @@
+{
+    "recommendations": [
+        "ms-python.python",
+        "ms-python.isort",
+        "ms-python.autopep8",
+        "DavidAnson.vscode-markdownlint",
+        "wholroyd.jinja",
+    ]
+}

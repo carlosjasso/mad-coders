@@ -1,0 +1,19 @@
+{
+    "files.exclude": {
+        "**/__pycache__": true,
+        ".cache": true
+    },
+    "python.terminal.activateEnvironment": true,
+    "python.terminal.activateEnvInCurrentTerminal": true,
+    "[python]": {
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": true
+        },
+        "editor.defaultFormatter": "ms-python.autopep8"
+    },
+    "[markdown]": {
+        "editor.tabSize": 2,
+        "files.insertFinalNewline": true
+    }
+}

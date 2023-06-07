@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% import "_components.html" as components %}
+{% block content %}
+    <section>
+        <h1>All articles</h1>
+        <ul class="article__list">
+            {% for article in articles_page.object_list %}
+                <li>
+                    <article>
+                        <header class="article__header">
+                            <h3>
+                                <a href="{{ ARTICLE_OUTPUT_PATH }}/{{ article.url }}" rel="bookmark" title="Permalink to {{ article.title }}">{{ article.title }}</a>
+                            </h3> 
+                            {{ components.localizeTimestamp(article) }}
+                        </header>
+                        <div>{{ article.summary }}</div>
+                    </article>
+                </li>
+            {% endfor %}
+        </ul>
+    </section>
+{% endblock content %}

@@ -1,0 +1,59 @@
+.article {
+    &__header {
+        h1 {
+            font-size: 2.2em;
+            font-weight: bold;
+        }
+
+        h3 {
+            font-weight: bold;
+        }
+
+        h1, h3 {
+            margin-bottom: .2em;
+        }
+    }
+
+    &__container {
+        img {
+            display: block;
+            margin: auto auto;
+        }
+
+        .page-break {
+            display: none;
+        }
+
+        @media print {
+            .page-break {
+                display: block;
+                page-break-after: always;
+            }
+        }
+    }
+
+    &__timestamp {
+        font-size: 0.7em;
+        color: gray;
+        margin: 0;
+
+        .icon {
+            vertical-align: middle;
+            display: inline-block;
+
+            svg {
+                stroke: gray;
+                height: 1em;
+            }
+        }
+    }
+
+    &__list {
+        padding: 0;
+
+        li {
+            list-style-type: none;
+            margin-bottom: 2em;
+        }
+    }
+}

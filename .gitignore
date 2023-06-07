@@ -117,9 +117,6 @@ venv.bak/
 # Rope project settings
 .ropeproject
 
-# mkdocs documentation
-/site
-
 # mypy
 .mypy_cache/
 .dmypy.json
@@ -127,3 +124,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Pelican output dir
+output/
+
+# vscode launch settings
+.vscode/launch.json

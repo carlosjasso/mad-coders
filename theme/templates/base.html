@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="{% block html_lang %}{{ DEFAULT_LANG }}{% endblock html_lang %}">
+    <head>
+        <title>{% block title %}{{ SITENAME }}{% endblock title %}</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% assets filters="libsass", output="css/bundle.min.css", "css/_bundle.scss" %}
+            <link rel="stylesheet" href="/{{ASSET_URL}}">
+        {% endassets %}
+        <link rel="icon" type="mage/x-png" href="/{{THEME_STATIC_DIR}}/images/favicon.png">
+        {% block page_styles %}{% endblock page_styles %}
+    </head>
+    <body>
+        <header class="main-header">
+            <a href="/">
+                <img class="main-header__logo" alt="mad coders page logo" src="/{{THEME_STATIC_DIR}}/images/logo-black.png" />
+            </a>
+        </header>
+        <main class="main-content">
+            {% block content %}
+            {% endblock content %}
+        </main>
+        {% assets filters=JS_FILTER, output="scripts/bundle.min.js", "scripts/common.js" %}
+            <script src="/{{ASSET_URL}}" defer></script>
+        {% endassets %}
+        {% block page_scripts %}{% endblock page_scripts %}
+    </body>
+</html>

@@ -1,0 +1,31 @@
+.main-header {
+    position: sticky;
+    top: 0;
+    background: white;
+    box-shadow: 0px 2px 15px -3px rgba(0,0,0,0.1);
+
+    &__logo {
+        width: 250px;
+        margin: 8px;
+    }
+}
+
+.main-content {
+    width: 80vw;
+    align-self: center;
+}
+
+@media print {
+    .main-header {
+        position: static;
+        box-shadow: none;
+
+        &__logo {
+            margin: 0;
+        }
+    }
+
+    .main-content {
+        width: 100%;
+    }
+}

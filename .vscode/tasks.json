@@ -1,0 +1,89 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Site: Build (Dev)",
+            "type": "shell",
+            "command": "${command:python.interpreterPath}",
+            "args": [
+                "-m",
+                "tasks",
+                "build"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Site: Build (Prod)",
+            "type": "shell",
+            "command": "${command:python.interpreterPath}",
+            "args": [
+                "-m",
+                "tasks",
+                "build",
+                "--is-prod"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Site: Start development server",
+            "type": "shell",
+            "command": "${command:python.interpreterPath}",
+            "args": [
+                "-m",
+                "tasks",
+                "serve"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Utils: Generate new article file",
+            "type": "shell",
+            "command": "${command:python.interpreterPath}",
+            "args": [
+                "-m",
+                "tasks",
+                "article",
+                "new",
+                "--title",
+                "${input:article-title}",
+                "--status",
+                "${input:article-status}",
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Utils: Get current UTC timestamp",
+            "type": "shell",
+            "command": "${command:python.interpreterPath}",
+            "args": [
+                "-m",
+                "tasks",
+                "article",
+                "utils",
+                "--timestamp",
+            ],
+            "problemMatcher": []
+        },
+    ],
+    "inputs": [
+        {
+            "type": "promptString",
+            "id": "article-title",
+            "description": "New article title",
+            "default": ""
+        },
+        {
+            "type": "pickString",
+            "id": "article-status",
+            "description": "Choose an initian status for the new article",
+            "options": [
+                { "label": "Process under the /drafts path", "value": "draft" },
+                { "label": "Process as a published article", "value": "published" },
+                { "label": "Ignore article", "value": "hidden" },
+            ],
+            "default": "draft"
+        }
+    ]
+}
