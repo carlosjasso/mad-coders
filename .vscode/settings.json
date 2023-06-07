@@ -1,6 +1,7 @@
 {
     "files.exclude": {
         "**/__pycache__": true,
+        ".cache": true
     },
     "python.terminal.activateEnvironment": true,
     "python.terminal.activateEnvInCurrentTerminal": true,
@@ -17,6 +18,5 @@
     "[markdown]": {
         "editor.tabSize": 2,
         "files.insertFinalNewline": true
-    },
-    "python.formatting.provider": "none"
+    }
 }
