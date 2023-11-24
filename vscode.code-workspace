@@ -1,0 +1,18 @@
+{
+    "folders": [
+        {
+            "path": ".",
+            "name": "Mad Coders"
+        }
+    ],
+    "settings": {
+        "json.schemas": [
+            {
+                "fileMatch": [
+                    "src/challenges/*/challenge.json"
+                ],
+                "url": "./src/challenge.schema.json"
+            }
+        ]
+    }
+}
