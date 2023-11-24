@@ -1,0 +1,25 @@
+{
+  "name": "mad-coders",
+  "version": "1.0.0",
+  "description": "mad coders challenge generation tool",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "node ./src/index.js build",
+    "build:dev": "node ./src/index.js build dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/carlosjasso/mad-coders.git"
+  },
+  "author": "Carlos Jasso <contact@carlos.jasso.dev>",
+  "license": "Unlicense",
+  "bugs": {
+    "url": "https://github.com/carlosjasso/mad-coders/issues"
+  },
+  "homepage": "https://github.com/carlosjasso/mad-coders#readme",
+  "devDependencies": {
+    "ajv": "^8.12.0",
+    "gnirts": "^1.1.7",
+    "terser": "^5.24.0"
+  }
+}
