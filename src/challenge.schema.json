@@ -1,0 +1,63 @@
+{
+    "$schema": "https://json-schema.org/draft-07/schema",
+    "title": "challenge schema",
+    "description": "Mad Coders JSON Schema definition for challenges",
+
+    "type": "object",
+    "definitions": {
+        "testCase": {
+            "type": "object",
+            "description": "Test case data definition.",
+            "properties": {
+                "args": {
+                    "type": "array",
+                    "description": "Arguments to be provided to the challenge function.",
+                    "minItems": 1
+                },
+                "expected": {
+                    "type": "array",
+                    "description": "Expected value to be returned by the challenge function.",
+                    "minItems": 1
+                }
+            },
+            "required": ["args", "expected"]
+        }
+    },
+    "properties": {
+        "function": {
+            "type": "object",
+            "description": "Definition of the challenge function.",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Name of the challenge function"
+                },
+                "params": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "Names of the challenge function parameters."
+                }
+            },
+            "required": ["name", "params"]
+        },
+        "mainCase": {
+            "allOf": [{ "$ref": "#/definitions/testCase" }],
+            "description": "Definition of the challenge main test case."
+        },
+        "testCases": {
+            "type": "array",
+            "description": "Definitios of the challenge test cases.",
+            "items": {
+                "allOf": [{ "$ref": "#/definitions/testCase" }]
+            }
+        },
+        "timeLimit": {
+            "type": "integer",
+            "description": "Number of max milliseconds for a test case to take to be considered as valid. Disabled if set to \"0\".",
+            "minimum": 0
+        }
+    },
+    "required": ["function", "mainCase", "testCases"]
+}
