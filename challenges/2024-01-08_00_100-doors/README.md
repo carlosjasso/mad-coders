@@ -10,7 +10,7 @@ The first time through, visit every door and *toggle* the door (if the door is c
 
 The second time, only visit every 2<sup>nd</sup> door  (door #2, #4, #6, ...), and toggle it.
 
-The third time, visit every 3<sup>rd</sup> door (door #3, #6, #9, ...), etc, until you only visit the 100th door.
+The third time, visit every 3<sup>rd</sup> door (door #3, #6, #9, ...), etc, until you only visit the 100<sup>th</sup> door.
 
 Write a function that prints to the console the state of the doors after the last pass. Show the result in an aray with *only* the number of those doors that remain open.
 
