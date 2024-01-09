@@ -1,4 +1,1 @@
-# ignore ndoe modules
-node_modules/
-#ignore output
-dist/
+/**/*.pdf
