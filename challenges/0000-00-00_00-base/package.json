@@ -1,0 +1,10 @@
+{
+    "name": "<name>",
+    "version": "1.0.0",
+    "description": "Mad Coders challenge",
+    "main": "challenge.js",
+    "scripts": {
+      "start": "node challenge.js"
+    }
+  }
+  
