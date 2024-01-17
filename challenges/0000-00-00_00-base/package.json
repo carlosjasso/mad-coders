@@ -4,7 +4,8 @@
     "description": "Mad Coders challenge",
     "main": "challenge.js",
     "scripts": {
-      "start": "node challenge.js"
+      "start": "node challenge.js",
+      "test": "node -e \"console.log('no test data available')\""
     }
   }
   
