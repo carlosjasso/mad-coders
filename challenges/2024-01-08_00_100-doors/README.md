@@ -20,6 +20,8 @@ Write a function that prints to the console the state of the doors after the las
 [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
 ```
 
+> Here's a [video](https://www.youtube.com/watch?v=PIoGE8_jXXk) that shows how the process should work through each iteration.
+
 ## The setup
 
 To run this challenge, it's recommended to installl [nodejs](https://nodejs.org/en) on your system. Once installed, you can simply open your terminal into the challenge directory and run: 
