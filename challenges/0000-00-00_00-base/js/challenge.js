@@ -1,4 +1,4 @@
-function main() {
+export function doSomething() {
     // write your code here -----------------------------
 
 
@@ -8,7 +8,7 @@ function main() {
 
 (_ => {
     console.time("took");
-    main();
+    doSomething();
     console.log();
     console.timeEnd("took");
 })();
