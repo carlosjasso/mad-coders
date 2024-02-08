@@ -9,5 +9,3 @@
 ```json
 ...
 ```
-
-&lt;setup&gt;
