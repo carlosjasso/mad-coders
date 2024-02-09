@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-func DoSomething() {
+func doSomething() {
 	// write your code here -----------------------------
 
 	// --------------------------------------------------
