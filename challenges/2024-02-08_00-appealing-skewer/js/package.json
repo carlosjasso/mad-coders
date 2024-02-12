@@ -1,0 +1,11 @@
+{
+    "name": "appealing-skewer",
+    "version": "1.0.0",
+    "description": "Mad Coders challenge",
+    "type": "module",
+    "main": "challenge.js",
+    "scripts": {
+        "start": "node challenge.js",
+        "test": "node challenge.test.js"
+    }
+}
